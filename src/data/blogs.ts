@@ -7,6 +7,10 @@ import theGraph from '../../blogs/05-the-graph-protocol-guide.md?raw';
 import compound from '../../blogs/06-compound-protocol-guide.md?raw';
 import consensus from '../../blogs/2026-02-26-consensus-mechanisms.md?raw';
 import hotstuff from '../../blogs/2026-02-26-hotstuff-bft-consensus.md?raw';
+import ethernaut from '../../blogs/07-ethernaut-ctf-writeups.md?raw';
+import neodym from '../../blogs/08-neodym-ctf-defi-exploits.md?raw';
+import aptosIndexer from '../../blogs/09-building-aptos-aave-indexer.md?raw';
+import lendingProtocol from '../../blogs/10-building-lending-protocol.md?raw';
 
 export interface BlogMeta {
   slug: string;
@@ -64,6 +68,10 @@ function categorize(slug: string): string {
   if (slug.includes('compound')) return 'DeFi';
   if (slug.includes('consensus')) return 'Blockchain';
   if (slug.includes('hotstuff')) return 'Blockchain';
+  if (slug.includes('ethernaut')) return 'Smart Contract Security';
+  if (slug.includes('neodym')) return 'Smart Contract Security';
+  if (slug.includes('indexer')) return 'Blockchain';
+  if (slug.includes('lending')) return 'DeFi';
   return 'Blockchain';
 }
 
@@ -83,6 +91,10 @@ const rawFiles: { filename: string; content: string; date: string }[] = [
   { filename: '06-compound-protocol-guide.md', content: compound, date: '2025-10-03' },
   { filename: '2026-02-26-consensus-mechanisms.md', content: consensus, date: '2025-11-17' },
   { filename: '2026-02-26-hotstuff-bft-consensus.md', content: hotstuff, date: '2025-12-05' },
+  { filename: '07-ethernaut-ctf-writeups.md', content: ethernaut, date: '2025-05-19' },
+  { filename: '08-neodym-ctf-defi-exploits.md', content: neodym, date: '2025-07-02' },
+  { filename: '09-building-aptos-aave-indexer.md', content: aptosIndexer, date: '2025-09-15' },
+  { filename: '10-building-lending-protocol.md', content: lendingProtocol, date: '2025-11-28' },
 ];
 
 export const blogs: BlogMeta[] = rawFiles.map(({ filename, content, date }) => {

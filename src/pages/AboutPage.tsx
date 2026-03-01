@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Book, Code, Coffee, Cpu } from 'lucide-react';
+import { Book, Code, Coffee, Cpu, Shield } from 'lucide-react';
 import { personalInfo, education, skills } from '../data/resume';
 
 const AboutPage = () => {
@@ -22,7 +22,7 @@ const AboutPage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <motion.div
               whileHover={{ scale: 1.02 }}
               className="glass-card p-6"
@@ -75,6 +75,28 @@ const AboutPage = () => {
                   <span
                     key={s}
                     className="text-sm px-3 py-1 rounded-full border border-cyan-400/30 text-cyan-400"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              className="glass-card p-6"
+            >
+              <div className="flex items-center mb-4">
+                <Shield className="w-6 h-6 text-cyan-400 mr-2" />
+                <h2 className="text-xl font-semibold text-white">
+                  Blockchain & Web3
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.blockchain.map((s) => (
+                  <span
+                    key={s}
+                    className="text-sm px-3 py-1 rounded-full border border-violet-400/30 text-violet-400"
                   >
                     {s}
                   </span>

@@ -8,6 +8,7 @@ const CATEGORY_COLORS: Record<string, string> = {
   Blockchain: 'text-cyan-400',
   DeFi: 'text-violet-400',
   Indexing: 'text-green-400',
+  'Smart Contract Security': 'text-red-400',
 };
 
 const BlogPage = () => {

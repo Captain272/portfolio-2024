@@ -139,10 +139,11 @@ function useTypingAnimation(strings: string[], typingSpeed = 80, deletingSpeed =
 
 const Hero = () => {
   const typedText = useTypingAnimation([
-    'AI Developer',
-    'Full Stack Engineer',
+    'Backend Engineer',
+    'Blockchain Developer',
+    'DeFi Protocol Builder',
+    'Smart Contract Auditor',
     'Founding Engineer',
-    'ML Pipeline Builder',
   ]);
 
   return (
