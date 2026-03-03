@@ -9,6 +9,7 @@ import Contact from './components/Contact';
 import BlogPage from './pages/BlogPage';
 import BlogPost from './pages/BlogPost';
 import AboutPage from './pages/AboutPage';
+import AdminPage from './pages/AdminPage';
 import Background from './components/Background';
 import LoadingScreen from './components/LoadingScreen';
 import { ThemeProvider } from './context/ThemeContext';
@@ -66,6 +67,7 @@ function App() {
               <Route path="/blogs" element={<BlogPage />} />
               <Route path="/blogs/:slug" element={<BlogPost />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/admin" element={<AdminPage />} />
             </Routes>
           </div>
         </div>

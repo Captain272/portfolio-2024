@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Clock, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { blogs } from '../data/blogs';
+import { getVisibleBlogs } from '../data/blogs';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Move Language': 'text-pink-400',
@@ -12,6 +12,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const BlogPage = () => {
+  const blogs = getVisibleBlogs();
+
   return (
     <div className="min-h-screen pt-20 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

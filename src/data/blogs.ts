@@ -20,20 +20,27 @@ export interface BlogMeta {
   date: string;
   readTime: string;
   content: string;
+  isDynamic?: boolean;
 }
 
-function estimateReadTime(text: string): string {
+// localStorage keys
+const DYNAMIC_BLOGS_KEY = 'portfolio_dynamic_blogs';
+const VISIBILITY_KEY = 'portfolio_blog_visibility';
+
+export type VisibilityMap = Record<string, boolean>;
+
+export function estimateReadTime(text: string): string {
   const words = text.split(/\s+/).length;
   const minutes = Math.ceil(words / 200);
   return `${minutes} min read`;
 }
 
-function extractTitle(md: string): string {
+export function extractTitle(md: string): string {
   const match = md.match(/^#\s+(.+)/m);
   return match ? match[1] : 'Untitled';
 }
 
-function extractDescription(md: string): string {
+export function extractDescription(md: string): string {
   // Grab the first normal paragraph (not a heading, not a list, not metadata)
   const lines = md.split('\n');
   for (const line of lines) {
@@ -97,7 +104,7 @@ const rawFiles: { filename: string; content: string; date: string }[] = [
   { filename: '10-building-lending-protocol.md', content: lendingProtocol, date: '2025-11-28' },
 ];
 
-export const blogs: BlogMeta[] = rawFiles.map(({ filename, content, date }) => {
+const staticBlogs: BlogMeta[] = rawFiles.map(({ filename, content, date }) => {
   const slug = makeSlug(filename);
 
   return {
@@ -111,6 +118,55 @@ export const blogs: BlogMeta[] = rawFiles.map(({ filename, content, date }) => {
   };
 });
 
+// ─── localStorage helpers ───
+
+export function getDynamicBlogs(): BlogMeta[] {
+  try {
+    const raw = localStorage.getItem(DYNAMIC_BLOGS_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveDynamicBlogs(blogs: BlogMeta[]): void {
+  localStorage.setItem(DYNAMIC_BLOGS_KEY, JSON.stringify(blogs));
+}
+
+export function getVisibilityMap(): VisibilityMap {
+  try {
+    const raw = localStorage.getItem(VISIBILITY_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveVisibilityMap(map: VisibilityMap): void {
+  localStorage.setItem(VISIBILITY_KEY, JSON.stringify(map));
+}
+
+// ─── Merged accessors ───
+
+/** All blogs (static + dynamic), ignoring visibility. Used by admin. */
+export function getAllBlogs(): BlogMeta[] {
+  return [...staticBlogs, ...getDynamicBlogs()];
+}
+
+/** Only visible blogs. Used by public BlogPage. */
+export function getVisibleBlogs(): BlogMeta[] {
+  const all = getAllBlogs();
+  const visibility = getVisibilityMap();
+  return all.filter((blog) => visibility[blog.slug] !== false);
+}
+
+/** Backward-compat export */
+export const blogs = staticBlogs;
+
 export function getBlogBySlug(slug: string): BlogMeta | undefined {
-  return blogs.find((b) => b.slug === slug);
+  const all = getAllBlogs();
+  const visibility = getVisibilityMap();
+  const blog = all.find((b) => b.slug === slug);
+  if (!blog || visibility[blog.slug] === false) return undefined;
+  return blog;
 }
